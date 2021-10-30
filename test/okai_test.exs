@@ -3,7 +3,7 @@ defmodule OkaiTest do
   doctest Okai
 
   test "Heartbeat Report" do
-    assert Okai.parse_ack(
+    assert Okai.parse(
              "+ACK:GTHBD,EF801C,862061041674804,ZK105,jFf;Xt3BXt(BjVzJQA%Q,20190816020036,0035$"
            ) ==
              {:ok,
@@ -20,7 +20,7 @@ defmodule OkaiTest do
   end
 
   test "Server Acknowledgement for Heartbeat" do
-    assert Okai.parse_sack("+SACK:GTHBD,EF8001,02A1$") ==
+    assert Okai.parse("+SACK:GTHBD,EF8001,02A1$") ==
              {:ok,
               [
                 "+SACK:GTHBD",

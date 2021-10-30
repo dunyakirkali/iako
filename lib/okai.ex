@@ -4,8 +4,7 @@ defmodule Okai do
 
   defparsec(
     :parse_sack,
-    string("+SACK:GTHBD")
-    |> ignore(string(","))
+    ignore(string(","))
     |> concat(version())
     |> ignore(string(","))
     |> concat(count())
@@ -14,8 +13,7 @@ defmodule Okai do
 
   defparsec(
     :parse_ack,
-    string("+ACK:GTHBD")
-    |> ignore(string(","))
+    ignore(string(","))
     |> concat(version())
     |> ignore(string(","))
     |> concat(imei())
@@ -29,4 +27,10 @@ defmodule Okai do
     |> concat(count_number())
     |> concat(tail())
   )
+
+  defparsec :parse,
+    choice([
+      string("+ACK:GTHBD") |> parsec(:parse_ack),
+      string("+SACK:GTHBD") |> parsec(:parse_sack)
+    ])
 end
